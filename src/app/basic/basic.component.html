@@ -1,0 +1,120 @@
+<h2>表示</h2>
+
+<!-- プロパティの表示 -->
+<div>{{ prop0 }}</div>
+
+<!-- `{{ }}` の中では式も実行できる -->
+<div>{{ prop0.toUpperCase() }}</div>
+
+
+
+<h2>切り替え</h2>
+
+<div>
+  <button (click)="toggleProp1()">toggle prop1</button>
+</div>
+
+<!-- ngIf を使った切り替え -->
+<ng-container *ngIf="prop1">
+  <div>1. prop1 is true</div>
+</ng-container>
+
+<!-- ngIf ... else を使った切り替え -->
+<ng-container *ngIf="prop1; else prop1ElseBlock">
+  <div>2. prop1 is true</div>
+</ng-container>
+<ng-template #prop1ElseBlock>
+  <div>2. prop1 is false</div>
+</ng-template>
+
+<!-- ngSwitch を使った切り替え -->
+<ng-container [ngSwitch]="prop1">
+  <div *ngSwitchCase="true">3. prop1 is true</div>
+  <div *ngSwitchCase="false">3. prop1 is false</div>
+</ng-container>
+
+<!-- 三項演算子を使った切り替え -->
+<div>
+  4. prop1 is {{ prop1 ? "true" : "false" }}
+</div>
+
+<style>
+  .class1 > div { visibility: hidden }
+  .class1 > div.show { visibility: visible }
+</style>
+<div class="class1">
+  <!-- クラス指定により切り替え -->
+  <div [class.show]="prop1">5. prop1 is true</div>
+  <div [class.show]="!prop1">5. prop1 is false</div>
+
+  <!-- ngClass によるクラス指定により切り替え -->
+  <div [ngClass]="{'show': prop1}">6. prop1 is true</div>
+  <div [ngClass]="{'show': prop1 === false}">6. prop1 is false</div>
+</div>
+
+
+
+<h2>ループ</h2>
+
+<!-- ngFor でループする -->
+<div *ngFor="let e of prop2">
+  <div>1. element is {{ e }}</div>
+</div>
+
+<!-- ngFor でインデックス付きでループする -->
+<div *ngFor="let e of prop2; let i = index">
+  <div>2. element is {{ e }}. index is {{ i }}</div>
+</div>
+
+
+
+<h2>イベント</h2>
+
+<!-- クリックイベントで関数を実行する -->
+<div>
+  <button (click)="incrProp3()">incr prop3</button>
+  <span>{{ prop3 }}</span>
+</div>
+
+<!-- 入力した内容をプロパティにセットする -->
+<div>
+  <!-- $event で発生したイベント要素を取得できる -->
+  <input (input)="prop4 = $event.target.value">
+  <span>{{ prop4 }}</span>
+</div>
+
+<!-- 参照変数を使って入力した内容をプロパティにセットする -->
+<div>
+  <!-- 要素に #var と参照用の変数名をつけると var で参照できるようになる -->
+  <input #input1>
+  <button (click)="prop4 = input1.value">submit</button>
+  <span>{{ prop4 }}</span>
+</div>
+
+
+
+<h2>入出力</h2>
+
+<!--
+  @Input() デコレータ付きのプロパティでコンポーネントに値をセットできる.
+  @Output() デコレータ付きの EventEmitter プロパティでコンポーネントから独自イベントを発行できる.
+-->
+<app-dog [name]="'taro'" (say)="taro_text.value = taro_text.value + $event + '\n'"></app-dog>
+<textarea #taro_text></textarea>
+
+
+
+<h2>双方向バインディング</h2>
+
+<!--
+  `[(ngModel)]="prop"` とすると prop が要素の value としてセットされ、要素の value の変更に合わせて prop も変更されるという双方向バインディング状態となる.
+-->
+<input [(ngModel)]="prop5">
+
+<!--
+  これは `[(ngModel)]` と等価.
+  お互いの input の変更でお互いが同期的に変更されるのが確認できる.
+-->
+<input [value]="prop5" (input)="prop5 = $event.value">
+
+
