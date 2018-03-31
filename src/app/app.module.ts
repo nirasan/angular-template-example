@@ -1,17 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { BasicComponent } from './basic/basic.component';
-import { DogComponent } from './dog/dog.component';
+import {AppComponent} from './app.component';
+import {Comp1Component} from './comp1.component';
+import {Comp2Component} from './comp2.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BasicComponent,
-    DogComponent
+    Comp1Component,
+    Comp2Component
   ],
   imports: [
     BrowserModule,
@@ -20,4 +20,5 @@ import { DogComponent } from './dog/dog.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
