@@ -58,7 +58,7 @@ export class Comp2Component {
 }
 ```
 
-# if で表示する要素を切り替える
+# if で分岐する
 
 * `*ngIf="式"` で式の結果が true ならその要素を表示する.
   * プレフィックスの `*` の意味は[公式ドキュメント](https://angular.io/guide/structural-directives#the-asterisk--prefix)で.
@@ -120,5 +120,40 @@ export class Comp4Component {
   func1(): string[] {
     return ['hello', 'world'];
   }
+}
+```
+
+# switch で分岐する
+
+* switch の利用は三段構え.
+
+1. `[ngSwitch]="式"` で判定対象を定義し.
+1. `*ngSwitchCase="値"` で分岐先の条件の値を定義し.
+1. デフォルトケースを `*ngSwitchDefault` で定義する.
+
+```src/app/comp5.component.ts
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-comp5',
+  template: `
+    <h2>Switch</h2>
+
+    <ng-container *ngFor="let e of prop1">
+      <ng-container [ngSwitch]="e.type">
+        <div *ngSwitchCase="'number'">number is {{ e.value }}</div>
+        <div *ngSwitchCase="'string'">string is {{ e.value }}</div>
+        <div *ngSwitchDefault>unknown type: {{ e.type }} value: {{ e.value }}</div>
+      </ng-container>
+    </ng-container>
+  `
+})
+export class Comp5Component {
+  prop1 = [
+    {type: 'number', value: 1},
+    {type: 'string', value: 'hello'},
+    {type: 'number', value: 100},
+    {type: 'array', value: [1, 2, 3]},
+  ];
 }
 ```
