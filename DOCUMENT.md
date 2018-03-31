@@ -58,3 +58,36 @@ export class Comp2Component {
 }
 ```
 
+# if で表示する要素を切り替える
+
+* `*ngIf="式"` で式の結果が true ならその要素を表示する.
+  * プレフィックスの `*` の意味は[公式ドキュメント](https://angular.io/guide/structural-directives#the-asterisk--prefix)で.
+* `ng-container` は DOM に出力されない要素で if などと合わせて利用すると DOM 要素を汚さずに制御構造を記述できる.
+* `ng-temlate` はデフォルトでは表示されない要素で if などの制御構造と合わせて利用された際に指定された場合だけ表示される.
+* `*ngIf="条件; else 変数名"` で条件が false の場合に変数名で指定された要素が表示される.
+  * 変数名と要素の関連付けは要素のプロパティのような形で `#変数名` とすることで行われる.
+
+```src/app/comp3.component.ts
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-comp3',
+  template: `
+    <h2>If</h2>
+
+    <ng-container *ngIf="prop1">
+      <div>1. prop1 is true</div>
+    </ng-container>
+
+    <ng-container *ngIf="prop1; else prop1ElseBlock">
+      <div>2. prop1 is true</div>
+    </ng-container>
+    <ng-template #prop1ElseBlock>
+      2. prop1 is false
+    </ng-template>
+  `
+})
+export class Comp3Component {
+  prop1 = false;
+}
+```
