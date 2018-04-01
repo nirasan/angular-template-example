@@ -191,3 +191,43 @@ export class Comp6Component {
 }
 ```
 
+# クラスを動的に指定する
+
+* `[class.クラス名]="式"` で式が true の場合だけクラスが付与される.
+* `[ngClass]="{ 'クラス名': 式 }"` で式が true のクラスがまとめて付与される.クラス名は空白区切りで複数指定できる.
+
+```src/app/comp7.component.ts
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-comp7',
+  template: `
+    <h2>Class</h2>
+
+    <div>
+      <p [class.center]="prop1">1. this is center.</p>
+      <p [class.center]="!prop1">1. this is not center.</p>
+
+      <p [ngClass]="{'center': prop1, 'bold': prop1, 'italic': !prop1}">2. this is center and bold.</p>
+
+      <p [ngClass]="{'center': !prop1, 'bold italic': prop1}">3. this is bold and italic.</p>
+    </div>
+  `,
+  styles: [`
+    .center {
+      text-align: center
+    }
+
+    .bold {
+      font-weight: bold
+    }
+
+    .italic {
+      font-style: italic
+    }
+  `]
+})
+export class Comp7Component {
+  prop1 = true;
+}
+```
