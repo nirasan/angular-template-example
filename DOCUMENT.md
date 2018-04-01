@@ -266,3 +266,31 @@ export class Comp8Component implements OnInit {
   }
 }
 ```
+
+# UI とコンポーネントで値を同期する
+
+* `[(ngModel)]="プロパティ名"` とすると要素の value とプロパティの変更を相互に反映しあって値を同期できる.
+* `[(ngModel)]="プロパティ名"` は `[value]="プロパティ" (event)="プロパティ名 = value"` のシンタックスシュガーのようなもの.
+
+```src/app/comp9.component.ts
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-comp9',
+  template: `
+    <h2>2 way binding</h2>
+
+    <div>
+      <p>prop1 is {{ prop1 }}</p>
+
+      <input [value]="prop1" (input)="prop1 = $event.target.value">
+      <br />
+
+      <input [(ngModel)]="prop1">
+    </div>
+  `
+})
+export class Comp9Component {
+  prop1 = 'hello world';
+}
+```
