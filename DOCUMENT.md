@@ -411,3 +411,46 @@ export class Comp11Component {
   }
 }
 ```
+
+# 子コンポーネントへ値を渡す / 子コンポーネントから値を受け取る
+
+* 親コンポーネントから子コンポーネントへは子のプロパティに親が値をセットする形で値を引き渡す.
+  * 親コンポーネント側では DOM のプロパティと同様に `[プロパティ]="式"` とすることで値をセットする.
+  * 子コンポーネント側では公開するプロパティに `@Input()` ディレクティブをつける.
+
+* 親コンポーネントが子コンポーネントから値を受け取りたい場合は子コンポーネントでイベントを定義して親コンポーネントでハンドリングする.
+  * 親コンポーネント側では `(イベント)="式"` とすることで子のイベント経由で値を受け取ることができる.
+  * 子コンポーネント側では `@Output() イベント名 = new EventEmitter<引き渡したい値の型>();` というプロパティを定義することでイベントを公開し `イベント.emit(引き渡したい値)` とすることでイベントを発火する.
+
+```src/comp12.component.ts
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+
+@Component({
+  selector: 'app-comp12',
+  template: `
+    <h2>Child component input and output</h2>
+    <app-comp12-a [prop1]="1000" (event1)="log($event)"></app-comp12-a>
+  `
+})
+export class Comp12Component {
+  log(a: any) {
+    console.log(a);
+  }
+}
+
+@Component({
+  selector: 'app-comp12-a',
+  template: `
+    <h2>Child component</h2>
+
+    <div>
+      <label><input type="text" [(ngModel)]="prop1"></label><br/>
+      <button (click)="event1.emit(prop1)">Submit</button>
+    </div>
+  `
+})
+export class Comp12AComponent {
+  @Input() prop1 = 0;
+  @Output() event1 = new EventEmitter<number>();
+}
+```
