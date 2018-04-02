@@ -1,4 +1,20 @@
 
+逆引き Angular テンプレート
+
+Angular TypeScript
+
+# はじめに
+
+* Angular テンプレート文法について[公式ドキュメント](https://angular.io/guide/template-syntax)がよくできていて基本的に読めばわかるようになっているが、索引と自分の勉強のために使い方の例をまとめてみた。
+
+# バージョン
+
+* @angular/core 5.2.9
+
+# リポジトリ
+
+* https://github.com/nirasan/angular-template-example
+
 # 動的に値を表示する
 
 * `{{ 式 }}` で式の実行結果を表示する.
